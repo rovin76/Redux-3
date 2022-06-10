@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addTodo } from "../store/actions";
+import { addTodo } from "../store/Todo/actions";
 
 function TodoApp() {
   const ref = useRef();

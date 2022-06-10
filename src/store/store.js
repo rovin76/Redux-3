@@ -4,8 +4,8 @@ import {
   compose,
   combineReducers
 } from "redux";
-import counterReducer from "./counter.reducer";
-import todoReducer from "./todo.reducer";
+import counterReducer from "./counter/counter.reducer";
+import todoReducer from "./Todo/todo.reducer";
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootreducer = combineReducers({
