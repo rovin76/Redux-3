@@ -4,36 +4,39 @@ import { addTodo, getTodo } from "../store/Todo/actions";
 function TodoApp() {
   const ref = useRef();
   const dispatch = useDispatch();
-  const todos = useSelector((state) => state.todo.todos);
+  const { loading, error, todos } = useSelector((state) => state.todo);
 
   const addNew = () => {
     let value = ref.current.value;
-    dispatch(
-      addTodo({
-        value: value,
-        isCompleted: false
-      })
-    );
+    addTodo(dispatch, {
+      value: value,
+      isCompleted: false
+    });
     ref.current.value = null;
   };
   useEffect(() => {
     getTodo(dispatch);
   }, []);
-
-  return (
-    <div>
+  if (loading) {
+    return <p>loading</p>;
+  } else if (error) {
+    return <p>Something wrong</p>;
+  } else {
+    return (
       <div>
-        <h1>TodoApp</h1>
-        <input ref={ref} type="text" placeholder="Type here...." />
-        <button onClick={addNew}>Add</button>
-      </div>
+        <div>
+          <h1>TodoApp</h1>
+          <input ref={ref} type="text" placeholder="Type here...." />
+          <button onClick={addNew}>Add</button>
+        </div>
 
-      <br />
-      <br />
-      {todos.map((todo) => (
-        <div key={todo.id}>{todo.value}</div>
-      ))}
-    </div>
-  );
+        <br />
+        <br />
+        {todos.map((todo) => (
+          <div key={todo.id}>{todo.value}</div>
+        ))}
+      </div>
+    );
+  }
 }
 export default TodoApp;
