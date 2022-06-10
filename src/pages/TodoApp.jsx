@@ -4,8 +4,12 @@ import { addTodo, getTodo } from "../store/Todo/actions";
 function TodoApp() {
   const ref = useRef();
   const dispatch = useDispatch();
-  const { loading, error, todos } = useSelector((state) => state.todo);
-
+  // button adding
+  const { loading: loadingButton } = useSelector((state) => state.todo.addTodo);
+  const { loading, error, data: todos } = useSelector(
+    (state) => state.todo.getTodos
+  );
+  console.log(todos);
   const addNew = () => {
     let value = ref.current.value;
     addTodo(dispatch, {
@@ -27,7 +31,9 @@ function TodoApp() {
         <div>
           <h1>TodoApp</h1>
           <input ref={ref} type="text" placeholder="Type here...." />
-          <button onClick={addNew}>Add</button>
+          <button onClick={addNew} disabled={loadingButton}>
+            Add
+          </button>
         </div>
 
         <br />

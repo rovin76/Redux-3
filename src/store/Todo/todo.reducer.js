@@ -1,5 +1,6 @@
 import {
-  ADD_TODO,
+  ADD_TODO_LOADING,
+  ADD_TODO_SUCCESS,
   COMPLETE_TODO,
   DELETE_TODO,
   GET_TODO_ERROR,
@@ -9,9 +10,16 @@ import {
 } from "./action.type";
 
 let initialState = {
-  loading: false,
-  error: false,
-  todos: []
+  addTodo: {
+    loading: false,
+    error: false,
+    data: {}
+  },
+  getTodos: {
+    loading: false,
+    error: false,
+    data: []
+  }
 };
 
 const todoReducer = (state = initialState, { type, payload }) => {
@@ -19,19 +27,55 @@ const todoReducer = (state = initialState, { type, payload }) => {
     case GET_TODO_LOADING: {
       return {
         ...state,
-        loading: true
+        getTodos: {
+          ...state.getTodos,
+          loading: true
+        }
       };
     }
     case GET_TODO_SUCCESS: {
-      return { ...state, todos: payload, loading: false };
-    }
-    case GET_TODO_ERROR: {
-      return { ...state, error: true, loading: false };
-    }
-    case ADD_TODO: {
       return {
         ...state,
-        todos: [...state.todos, { ...payload }]
+        getTodos: {
+          ...state.getTodos,
+          loading: false,
+          data: payload,
+          error: false
+        }
+      };
+    }
+    case GET_TODO_ERROR: {
+      return {
+        ...state,
+        getTodos: {
+          ...state.getTodos,
+          loading: false,
+          error: true
+        }
+      };
+    }
+    case ADD_TODO_LOADING: {
+      return {
+        ...state,
+        addTodo: {
+          ...state.addTodo,
+          loading: true,
+          error: false
+        }
+      };
+    }
+    case ADD_TODO_SUCCESS: {
+      return {
+        ...state,
+        getTodos: {
+          data: [...state.getTodos.data, payload]
+        },
+        addTodo: {
+          ...state.addTodo,
+          loading: false,
+          error: false,
+          data: payload
+        }
       };
     }
     case DELETE_TODO: {

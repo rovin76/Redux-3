@@ -1,5 +1,8 @@
 import {
   ADD_TODO,
+  ADD_TODO_ERROR,
+  ADD_TODO_LOADING,
+  ADD_TODO_SUCCESS,
   COMPLETE_TODO,
   DELETE_TODO,
   GET_TODO_ERROR,
@@ -25,9 +28,18 @@ export const getTodo = (dispatch) => {
 };
 
 export const addTodo = (dispatch, payload) => {
-  axios.post("http://localhost:8080/todos", payload).then((res) => {
-    dispatch({ type: ADD_TODO, payload });
-  });
+  //loading
+  dispatch({ type: ADD_TODO_LOADING });
+  axios
+    .post("http://localhost:8080/todos", payload)
+    .then((res) => {
+      //success
+      dispatch({ type: ADD_TODO_SUCCESS, payload: res.data });
+    })
+    .catch(() => {
+      // error
+      dispatch({ type: ADD_TODO_ERROR });
+    });
 };
 export const completeTodo = (id) => ({ type: COMPLETE_TODO, payload: id });
 export const updateTodo = (payload) => ({ type: UPDATE_TODO, payload });
