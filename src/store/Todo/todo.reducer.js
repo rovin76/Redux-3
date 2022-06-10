@@ -2,11 +2,15 @@ import {
   ADD_TODO,
   COMPLETE_TODO,
   DELETE_TODO,
+  GET_TODO,
   UPDATE_TODO
 } from "./action.type";
 
 const todoReducer = (state = { todos: [] }, { type, payload }) => {
   switch (type) {
+    case GET_TODO: {
+      return { ...state, todos: payload };
+    }
     case ADD_TODO: {
       return {
         ...state,

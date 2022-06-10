@@ -1,7 +1,6 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addTodo } from "../store/Todo/actions";
-
+import { addTodo, getTodo } from "../store/Todo/actions";
 function TodoApp() {
   const ref = useRef();
   const dispatch = useDispatch();
@@ -17,7 +16,10 @@ function TodoApp() {
     );
     ref.current.value = null;
   };
-  console.log(todos);
+  useEffect(() => {
+    getTodo(dispatch);
+  }, []);
+
   return (
     <div>
       <div>
