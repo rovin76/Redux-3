@@ -12,15 +12,18 @@ function TodoApp() {
   console.log(todos);
   const addNew = () => {
     let value = ref.current.value;
-    addTodo(dispatch, {
-      value: value,
-      isCompleted: false
-    });
+    dispatch(
+      addTodo({
+        value: value,
+        isCompleted: false
+      })
+    );
     ref.current.value = null;
   };
   useEffect(() => {
-    getTodo(dispatch);
+    dispatch(getTodo());
   }, []);
+
   if (loading) {
     return <p>loading</p>;
   } else if (error) {

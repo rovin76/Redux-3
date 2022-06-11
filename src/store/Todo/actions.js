@@ -1,5 +1,4 @@
 import {
-  ADD_TODO,
   ADD_TODO_ERROR,
   ADD_TODO_LOADING,
   ADD_TODO_SUCCESS,
@@ -12,7 +11,7 @@ import {
 } from "./action.type";
 import axios from "axios";
 //todoapp
-export const getTodo = (dispatch) => {
+export const getTodo = () => (dispatch) => {
   // Loading time
   dispatch({ type: GET_TODO_LOADING });
   return axios
@@ -27,7 +26,7 @@ export const getTodo = (dispatch) => {
     });
 };
 
-export const addTodo = (dispatch, payload) => {
+export const addTodo = (payload) => (dispatch) => {
   //loading
   dispatch({ type: ADD_TODO_LOADING });
   axios
